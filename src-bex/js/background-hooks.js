@@ -36,12 +36,8 @@ export default function attachBackgroundHooks (bridge, allActiveConnections) {
     })
   })
 
-  chrome.browserAction.onClicked.addListener((tab) => { // eslint-disable-line no-unused-vars
-    bridge.send('bex.toggle.toolbar', { test: 'test' })
-  })
-
-  chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    console.log('CHANGED!')
+  chrome.browserAction.onClicked.addListener(() => {
+    bridge.send('bex.toggle.toolbar')
   })
 
   /*

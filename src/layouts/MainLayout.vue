@@ -1,4 +1,5 @@
 <template>
+
   <q-layout view="lHh Lpr lFf">
     <q-slide-transition>
       <q-header
@@ -6,6 +7,14 @@
         elevated
       >
         <q-toolbar>
+          <q-btn
+            flat
+            dense
+            round
+            @click="toggleToolbar"
+            icon="menu"
+            aria-label="Menu"
+          />
           <q-toolbar-title>
             Quasar BEX To Do List
           </q-toolbar-title>
@@ -33,17 +42,29 @@
               v-for="todo in todos"
               :key="todo.id"
             >
-              <a :href="todo.link" target="_blank">{{todo.text}}</a>
+              <q-item-section>
+                <a :href="todo.link" target="_blank">{{todo.text}}</a>
+              </q-item-section>
+              <q-item-section side>
+                <q-btn
+                  icon="remove"
+                  color="primary"
+                  size="xs"
+                  round
+                  @click="removeTodo(todo.id)"
+                >
+                </q-btn>
+              </q-item-section>
             </q-item>
           </q-list>
         </div>
       </q-list>
     </q-drawer>
-
-    <q-page-container>
-      <router-view />
-    </q-page-container>
+     <q-page-container>
+       <!-- <router-view /> -->
+     </q-page-container>
   </q-layout>
+
 </template>
 
 <script>
@@ -55,7 +76,7 @@ export default {
 
   data () {
     return {
-      uiVisible: true,
+      uiVisible: false,
       todo: {
         id: null,
         text: '',
@@ -94,18 +115,25 @@ export default {
       this.loadTodos()
     },
 
+    removeTodo (id) {
+      console.log('deleting', id)
+      dbService.delete('todo', id)
+      this.resetTodo()
+      this.loadTodos()
+    },
+
     addRemoteTodo (payload) {
       const data = payload.data
+      this.todo.id = uid()
       this.todo.text = data.text
       this.todo.link = data.link
       this.addTodo()
 
       // once the toolbar has been opened, notify the user.
-      this.toggleToolbar().then(() => {
-        this.$q.notify({
-          message: 'Todo has been added for ' + data.text,
-          color: 'positive'
-        })
+      this.toggleToolbar()
+      this.$q.notify({
+        message: 'Todo has been added for ' + data.text,
+        color: 'positive'
       })
     }
   },

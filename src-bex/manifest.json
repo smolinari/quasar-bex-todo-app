@@ -1,6 +1,6 @@
 {
-  "name": "quasar-bookmarking-extension",
-  "description": "A Quasar web browser extension for bookmarking.",
+  "name": "quasar-todo-extension",
+  "description": "A Quasar web browser extension for bookmarking and adding todos.",
   "version": "1.0.0",
   "manifest_version": 2,
   "icons": {
@@ -9,7 +9,7 @@
     "128": "icons/icon128x128.png"
   },
   "browser_action": {
-    "default_title": "quasar-bookmarking-extension"
+    "default_title": "quasar-todo-extension"
   },
   "background": {
     "scripts": [
@@ -38,7 +38,7 @@
     "www/*",
     "js/*",
     "css/*",
-    "google*"
+    "<all_urls>"
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';"
 }

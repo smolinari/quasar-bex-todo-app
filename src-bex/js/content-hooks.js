@@ -19,10 +19,10 @@ const resetIFrameHeight = () => {
   setIFrameHeight(defaultFrameHeight)
 }
 
-console.log('UNactivated hook')
+console.log('Unactivated hook')
 
 let Bridge = null
-export default function attachActivatedContentHooks (window, chrome, bridge) {
+export default function attachContentHooks (bridge) {
   console.log('activated hook')
   /**
    * When the drawer is toggled set the iFrame height to take the whole page.

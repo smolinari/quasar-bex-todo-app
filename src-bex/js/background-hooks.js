@@ -29,6 +29,7 @@ export default function attachBackgroundHooks (bridge, allActiveConnections) {
   })
 
   bridge.on('storage.remove', event => {
+    console.log('deleting2')
     const payload = event.data
     chrome.storage.local.remove(payload.key, () => {
       bridge.send(event.eventResponseKey, payload.data)

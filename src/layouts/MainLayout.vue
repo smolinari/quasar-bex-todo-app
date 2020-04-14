@@ -1,29 +1,6 @@
 <template>
 
   <q-layout view="lHh Lpr lFf">
-    <q-slide-transition>
-      <q-header
-        v-show="uiVisible"
-        elevated
-      >
-        <q-toolbar>
-          <q-btn
-            flat
-            dense
-            round
-            @click="toggleToolbar"
-            icon="menu"
-            aria-label="Menu"
-          />
-          <q-toolbar-title>
-            Quasar BEX To Do List
-          </q-toolbar-title>
-
-          <div>Quasar v{{ $q.version }}</div>
-        </q-toolbar>
-      </q-header>
-    </q-slide-transition>
-
     <q-drawer
       v-model="uiVisible"
       content-class="bg-grey-2"
@@ -59,6 +36,10 @@
           </q-list>
         </div>
       </q-list>
+
+      <div class="flex flex-center">
+        <q-btn flat dense @click="toggleToolbar(null, false)" icon="close">Close Todo List</q-btn>
+      </div>
     </q-drawer>
      <q-page-container>
        <!-- <router-view /> -->
@@ -89,11 +70,13 @@ export default {
   },
 
   methods: {
-    toggleToolbar () {
-      this.uiVisible = !this.uiVisible
-      return this.$q.bex.send('bex.toggle.iframe', {
-        open: this.uiVisible
-      })
+    toggleToolbar (payload, onlyOpen = false) {
+      if (onlyOpen === false || (onlyOpen && this.uiVisible === false)) {
+        this.uiVisible = !this.uiVisible
+        return this.$q.bex.send('bex.toggle.iframe', {
+          open: this.uiVisible
+        })
+      }
     },
 
     resetTodo () {
@@ -130,7 +113,7 @@ export default {
       this.addTodo()
 
       // once the toolbar has been opened, notify the user.
-      this.toggleToolbar()
+      this.toggleToolbar(null, true)
       this.$q.notify({
         message: 'Todo has been added for ' + data.text,
         color: 'positive'

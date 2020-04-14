@@ -2,28 +2,28 @@
 
 const
   iFrame = document.createElement('iframe'),
-  defaultFrameHeight = '0px'
+  defaultFrameHeight = '0px',
+  defaultFrameWidth = '0px'
 
 /**
  * Set the height of our iFrame housing our BEX
  * @param height
  */
-const setIFrameHeight = height => {
+const setIFrameDimensions = (height, width) => {
   iFrame.height = height
+  iFrame.width = width
+  document.body.style.paddingLeft = width
 }
 
 /**
  * Reset the iFrame to it's default height e.g The height of the top bar.
  */
-const resetIFrameHeight = () => {
-  setIFrameHeight(defaultFrameHeight)
+const resetIFrame = () => {
+  setIFrameDimensions(defaultFrameHeight, defaultFrameWidth)
 }
-
-console.log('Unactivated hook')
 
 let Bridge = null
 export default function attachContentHooks (bridge) {
-  console.log('activated hook')
   /**
    * When the drawer is toggled set the iFrame height to take the whole page.
    * Reset when the drawer is closed.
@@ -31,9 +31,9 @@ export default function attachContentHooks (bridge) {
   bridge.on('bex.toggle.iframe', event => {
     const payload = event.data
     if (payload.open) {
-      setIFrameHeight('100%')
+      setIFrameDimensions('100%', '300px')
     } else {
-      resetIFrameHeight()
+      resetIFrame()
     }
     bridge.send(event.eventResponseKey)
   })
@@ -58,7 +58,7 @@ function addElWithClass (tag, className, container) {
  */
 iFrame.id = 'bex-app-iframe'
 iFrame.width = '100%'
-resetIFrameHeight()
+resetIFrame()
 
 // Assign some styling so it looks seamless
 Object.assign(iFrame.style, {
@@ -68,7 +68,7 @@ Object.assign(iFrame.style, {
   bottom: '0',
   left: '0',
   border: '0',
-  zIndex: '2147483001', // Yes this is daft. Need to this to get over the Booksprout Messenger button
+  zIndex: '2147483001',
   overflow: 'visible'
 })
 

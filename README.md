@@ -1,6 +1,6 @@
-# Quasar App (bex-test3)
+# Quasar Demo Todo App as a Browser Extension
 
-A Quasar Framework app
+A Quasar Framework Browser Extension example
 
 ## Install the dependencies
 ```bash
@@ -9,7 +9,7 @@ yarn
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
-quasar dev
+quasar dev -m bex
 ```
 
 ### Lint the files
@@ -19,7 +19,7 @@ yarn run lint
 
 ### Build the app for production
 ```bash
-quasar build
+quasar build -m bex
 ```
 
 ### Customize the configuration
